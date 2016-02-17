@@ -1,0 +1,44 @@
+# MTK project .rc configure 
+
+on post-fs-data
+    mkdir /data/media 0770 media_rw media_rw
+    chown media_rw media_rw /data/media
+		
+on init
+    # Catalog
+    mkdir /mnt/media_rw/sdcard1 0700 media_rw media_rw
+    mkdir /mnt/media_rw/sdcard0 0700 media_rw media_rw
+	mkdir /mnt/media_rw/usbdisk0 0700 media_rw media_rw
+    mkdir /storage/sdcard1 0700 root root
+    mkdir /storage/sdcard0 0700 root root
+    mkdir /storage/usbdisk0 0700 root root
+
+	# Path
+    export EXTERNAL_STORAGE /storage/sdcard1
+    export USBOTG_STORAGE /storage/usbdisk0
+    export SECONDARY_STORAGE /storage/sdcard0:/storage/usbdisk0
+    
+    # Links
+    symlink /storage/sdcard1 /sdcard
+    symlink /storage/sdcard1 /mnt/sdcard
+    symlink /storage/sdcard0 /mnt/sdcard2
+    symlink /storage/usbdisk0 /usbdisk0
+    symlink /storage/usbdisk0 /mnt/usbdisk0
+       
+on post-fs
+    mount rootfs rootfs / shared rec
+    mount tmpfs tmpfs /mnt/secure private rec    
+    
+on fs
+    setprop ro.crypto.fuse_sdcard true
+
+service sdcard /system/bin/sdcard -u 1023 -g 1023 -l /mnt/media_rw/sdcard0 /storage/sdcard0
+    class late_start
+
+service fuse_sdcard1 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard1 /storage/sdcard1
+    class late_start
+    disabled
+
+service fuse_usbdisk0 /system/bin/sdcard -u 1023 -g 1023 /mnt/media_rw/usbdisk0 /storage/usbdisk0
+    class late_start
+    disabled

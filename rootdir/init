@@ -1,0 +1,14 @@
+#!/sbin/busybox sh
+
+cd /
+
+/sbin/busybox mkdir /tmp
+/sbin/busybox mount -t tmpfs tmpfs /tmp
+/sbin/busybox mount -t proc proc /proc
+/sbin/busybox sed -e 's/printk\.disable_uart\=1/printk\.disable_uart\=1 androidboot\.selinux\=permissive/' /proc/cmdline > /tmp/cmdline
+/sbin/busybox mount --bind -o ro /tmp/cmdline /proc/cmdline
+/sbin/busybox settings put global captive_portal_detection_enabled 0
+/sbin/busybox chmod 755 /init2
+/sbin/busybox mv /init2 /init
+/bin/su settings put global captive_portal_detection_enabled 0
+exec /init
