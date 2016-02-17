@@ -72,7 +72,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/init.modem.rc:root/init.modem.rc \
     $(LOCAL_PATH)/rootdir/init.recovery.mt6582.rc:root/init.recovery.mt6582.rc \
     $(LOCAL_PATH)/rootdir/init.mt6582.usb.rc:root/init.mt6582.usb.rc \
-    $(LOCAL_PATH)/rootdir/root/init.fuse.rc:root/init.fuse.rc \
+    $(LOCAL_PATH)/rootdir/init.fuse.rc:root/init.fuse.rc \
     $(LOCAL_PATH)/rootdir/factory_init.project.rc:root/factory_init.project.rc \
     $(LOCAL_PATH)/rootdir/factory_init.rc:root/factory_init.rc \
     $(LOCAL_PATH)/rootdir/init.charging.rc:root/init.charging.rc \
@@ -146,8 +146,8 @@ PRODUCT_PROPERTY_OVERRIDES := \
 	persist.service.debuggable=1 \
 	persist.mtk.wcn.combo.chipid=-1
 
-PRODUCT_NAME := full_mt6582
-PRODUCT_DEVICE := mt6582
+PRODUCT_NAME := full_m2
+PRODUCT_DEVICE := m2
 
 # Boot animation
 TARGET_SCREEN_HEIGHT := 854
